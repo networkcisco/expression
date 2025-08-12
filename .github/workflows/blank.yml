@@ -17,7 +17,7 @@ jobs:
       - name: Generate commits
         run: |
           touch activity.txt
-          for i in {11..13}; do
+          for i in {1..80}; do
             echo "Commit $i" >> activity.txt
             git config --global user.name "networkcisco"
             git config --global user.email "network.record-0d@icloud.com"
