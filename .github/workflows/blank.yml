@@ -1,0 +1,27 @@
+name: exp
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull latest changes with rebase
+        run: |
+          git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/networkcisco/expression.git main --rebase
+
+      - name: Generate commits
+        run: |
+          touch activity.txt
+          for i in {11..13}; do
+            echo "Commit $i" >> activity.txt
+            git config --global user.name "networkcisco"
+            git config --global user.email "network.record-0d@icloud.com"
+            git add .
+            git commit --date="$(date -d "-$i days")" -m "Update activity"
+          done
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/networkcisco/expression.git main
